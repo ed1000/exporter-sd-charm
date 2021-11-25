@@ -1,0 +1,13 @@
+venv
+.vscode
+build
+*.charm
+.coverage
+coverage.xml
+.gitignore
+.stestr
+cover
+release
+tests/
+requirements*
+tox.ini

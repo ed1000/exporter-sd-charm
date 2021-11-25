@@ -1,0 +1,20 @@
+---
+options:
+  lcm_password:
+    default: "lcm_password"
+    description: Password for LCM user to register targets
+    type: string
+  prometheus_password:
+    default: "prometheus_password"
+    description: Password for Prometheus user for service discovery
+    type: string
+  security_context:
+    description: Enables the security context of the pods
+    type: boolean
+    default: false
+  image_pull_policy:
+    type: string
+    description: |
+      ImagePullPolicy configuration for the pod.
+      Possible values: always, ifnotpresent, never
+    default: always

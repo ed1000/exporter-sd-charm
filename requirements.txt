@@ -1,0 +1,1 @@
+git+https://github.com/charmed-osm/ops-lib-charmed-osm/@master

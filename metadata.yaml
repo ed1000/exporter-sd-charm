@@ -1,0 +1,25 @@
+---
+name: exporter-sd
+summary: A Exporter HTTP SD K8s charm
+description: |
+  A CAAS charm to deploy Exporter HTTP SD
+series:
+  - kubernetes
+min-juju-version: 2.8.0
+resources:
+  image:
+    type: oci-image
+    description: OSM docker image for Exporter HTTP SD
+    upstream-source: "ed1000/exporter-sd:develop"
+# requires:
+#   db:
+#     interface: mysql
+#     limit: 1
+# provides:
+#   service-discovery:
+#     interface: service-discovery
+#   register-targets:
+#     interface: register-targets
+deployment:
+  type: stateless
+  service: cluster
