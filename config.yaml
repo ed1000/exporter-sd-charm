@@ -18,3 +18,32 @@ options:
       ImagePullPolicy configuration for the pod.
       Possible values: always, ifnotpresent, never
     default: always
+  max_file_size:
+    type: int
+    description: |
+      The maximum file size, in megabytes. If there is a reverse proxy in front
+      of Keystone, it may need to be configured to handle the requested size.
+      Note: if set to 0, there is no limit.
+    default: 0
+  ingress_class:
+    type: string
+    description: |
+      Ingress class name. This is useful for selecting the ingress to be used
+      in case there are multiple ingresses in the underlying k8s clusters.
+  ingress_whitelist_source_range:
+    type: string
+    description: |
+      A comma-separated list of CIDRs to store in the
+      ingress.kubernetes.io/whitelist-source-range annotation.
+
+      This can be used to lock down access to
+      Keystone based on source IP address.
+    default: ""
+  tls_secret_name:
+    type: string
+    description: TLS Secret name
+    default: ""
+  site_url:
+    type: string
+    description: Ingress URL
+    default: ""
