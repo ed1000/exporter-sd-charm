@@ -15,11 +15,11 @@ resources:
 #   db:
 #     interface: mysql
 #     limit: 1
-# provides:
-#   service-discovery:
-#     interface: service-discovery
-#   register-targets:
-#     interface: register-targets
+provides:
+  service-discovery:
+    interface: http
+  register-targets:
+    interface: http
 deployment:
   type: stateless
   service: cluster

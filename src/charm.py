@@ -9,6 +9,7 @@ from urllib.parse import urlparse
 
 from ops.main import main
 from opslib.osm.charm import CharmedOsmBase
+from opslib.osm.interfaces.http import HttpServer
 from opslib.osm.pod import (
     ContainerV3Builder,
     IngressResourceV3Builder,
@@ -73,6 +74,40 @@ class ExporterSdCharmCharm(CharmedOsmBase):
             *args,
             oci_image="image",
         )
+
+        self.service_discovery = HttpServer(self, "service-discovery")
+        self.framework.observe(
+            self.on["service-discovery"].relation_joined,
+            self._publish_service_discovery_info,
+        )
+
+        self.register_targets = HttpServer(self, "register-targets")
+        self.framework.observe(
+            self.on["register-targets"].relation_joined,
+            self._publish_register_targets_info,
+        )
+
+    def _publish_service_discovery_info(self, event):
+        if self.unit.is_leader():
+            config = ConfigModel(**dict(self.config))
+            self.service_discovery.publish_info(
+                host=self.app.name,
+                port=PORT,
+                path="/prometheus",
+                basic_auth_username="prometheus",
+                basic_auth_password=config.prometheus_password,
+            )
+
+    def _publish_register_targets_info(self, event):
+        if self.unit.is_leader():
+            config = ConfigModel(**dict(self.config))
+            self.register_targets.publish_info(
+                host=self.app.name,
+                port=PORT,
+                path="/exporters",
+                basic_auth_username="lcm",
+                basic_auth_password=config.lcm_password,
+            )
 
     def build_pod_spec(self, image_info, **kwargs):
         # Validate config
